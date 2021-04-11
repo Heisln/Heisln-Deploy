@@ -44,14 +44,9 @@ services:
     container_name: heisln-frontend
     image: deitsch/heisln-frontend
     ports:
-      - 8100:8100
+      - 8100:80
     networks:
       - heisln-net
-    entrypoint:
-      - /bin/sh
-      - -c
-    command:
-      - ionic serve --host 0.0.0.0 -b
 
   heisln-api:
     container_name: heisln-api
