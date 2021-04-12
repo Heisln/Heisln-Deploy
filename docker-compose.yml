@@ -1,0 +1,45 @@
+version: '3.5'
+
+services:
+  heisln-frontend:
+    container_name: heisln-frontend
+    image: deitsch/heisln-frontend
+    ports:
+      - 8100:80
+    networks:
+      - heisln-net
+
+  heisln-api:
+    container_name: heisln-api
+    image: deitsch/heisln-api
+    ports:
+      - 8000:80
+    networks: 
+      - heisln-net
+    depends_on:
+      - heisln-db
+
+  heisln-db:
+    container_name: heisln-db
+    image: mysql:8.0.23
+    ports:
+        - 3306:3306
+    networks: 
+      - heisln-net
+    environment:
+        MYSQL_ROOT_PASSWORD: qwertzuio
+        MYSQL_USER: test
+        MYSQL_PASSWORD: pass@word1234
+        MYSQL_DATABASE: Heisln.Car.Db
+
+  heisln-currency-converter:
+    container_name: 'heisln-currency-converter'
+    image: 'deitsch/heisln-currency-converter'
+    ports:
+      - 9000:80
+    networks:
+      - heisln-net
+
+networks:
+  heisln-net:
+    external: true

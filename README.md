@@ -30,3 +30,17 @@ Undeploy:
 ```bash
 terraform destroy
 ```
+
+## Local Deployment
+
+Create docker network:
+
+```bash
+docker network create heisln-net
+```
+
+Start containers:
+
+```bash
+docker-compose up -d
+```
