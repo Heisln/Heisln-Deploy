@@ -1,8 +1,8 @@
 # Heisln-Deploy
 
 This project manages the deployment of [Heisln-Frontend](https://github.com/Heisln/Heisln-Frontend), [Heisln-Api](https://github.com/Heisln/Heisln-Api) and [Heisln-currency-converter](https://github.com/Heisln/Heisln-currency-converter). The project will be deployed at [Exoscale](https://www.exoscale.com) via [Terraform](https://www.terraform.io)
-<br>
-Used docker images can be found on [https://hub.docker.com/u/deitsch](docker.com/u/deitsch)
+<br><br>
+Used docker images can be found on [docker.com/u/deitsch](https://hub.docker.com/u/deitsch)
 
 ## Set Exoscale key and secret
 
