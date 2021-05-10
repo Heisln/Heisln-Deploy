@@ -47,19 +47,37 @@ services:
       - 8100:80
     networks:
       - heisln-net
-
-  heisln-api:
-    container_name: heisln-api
-    image: deitsch/heisln-api
+  
+  heisln.user.service:
+    image: deitsch/heisln-userservice
+    container_name: heisln-userservice
     ports:
-      - 8000:80
-    networks: 
+      - 9001:80
+    networks:
       - heisln-net
     depends_on:
-      - heisln-db
+      - mongo
 
-  heisln-db:
-    container_name: heisln-db
+  mongo:
+    image: mongo
+    container_name: mongo
+    ports:
+      - 27017:27017
+    networks:
+      - heisln-net
+
+  heisln-carrental-service:
+    image: deitsch/heisln-carrentalservice
+    container_name: heisln-carrentalservice
+    ports:
+      - 9002:80
+    depends_on:
+      - heisln-mysql
+    networks:
+      - heisln-net
+
+  db:
+    container_name: heisln-mysql
     image: mysql:8.0.23
     ports:
         - 3306:3306
@@ -70,6 +88,20 @@ services:
         MYSQL_USER: test
         MYSQL_PASSWORD: pass@word1234
         MYSQL_DATABASE: Heisln.Car.Db
+  
+  rabbitmq:
+    image: deitsch/rabbitmq
+    container_name: rabbitmq
+    ports:
+      - 15672:15672
+      - 5672:5672
+    networks:
+      - heisln-net
+    environment:
+      - RABBITMQ_USER=test
+      - RABBITMQ_PASSWORD=test
+      - RABBITMQ_USER1=test1
+      - RABBITMQ_PASSWORD1=test1
 
   heisln-currency-converter:
     container_name: 'heisln-currency-converter'
