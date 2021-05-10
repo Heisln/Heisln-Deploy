@@ -35,5 +35,5 @@ terraform destroy
 
 ## Local Deployment
 
-Use [init-dev.sh](scripts/init-dev.sh) script to pull, update and run all projects needed. 
+Use [init-dev.sh](scripts/init-dev.sh) script to pull, update and run all projects needed.  
 Use [teardown-dev.sh](scripts/teardown-dev.sh) to destroy the dev environment.
