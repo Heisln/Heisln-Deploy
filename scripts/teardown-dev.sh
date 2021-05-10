@@ -4,7 +4,7 @@ TARGET_BASE_DIR="${SCRIPT_DIR}/../../heisln-infrastructure"
 REPOS=(\
   Heisln-rabbitmq \
   Heisln-currency-converter \
-  Heisln-Api-CarRentalService \
+  Heisln-CarRentalService \
   Heisln-UserService \
 )
 
