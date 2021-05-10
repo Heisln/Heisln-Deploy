@@ -3,6 +3,7 @@ TARGET_BASE_DIR="${SCRIPT_DIR}/../../heisln-infrastructure"
 GITHUB_ORG="Heisln"
 
 REPOS=(\
+  Heisln-rabbitmq \
   Heisln-currency-converter \
   Heisln-Api-CarRentalService \
   Heisln-UserService \
