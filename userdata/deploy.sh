@@ -35,46 +35,16 @@ sudo chmod +x /usr/local/bin/docker-compose
 # create docker network
 docker network create heisln-net
 
-# create docker-compose.yml on instance
+# create docker-compose-dependencies.yml on instance
 echo """
 version: '3.5'
 
 services:
-  heisln-frontend:
-    container_name: heisln-frontend
-    image: deitsch/heisln-frontend
-    ports:
-      - 8100:80
-    networks:
-      - heisln-net
-  
-  heisln.user.service:
-    image: deitsch/heisln-userservice
-    container_name: heisln-userservice
-    ports:
-      - 9001:80
-    networks:
-      - heisln-net
-    depends_on:
-      - mongo
-      - rabbitmq
-
   mongo:
     image: mongo
     container_name: mongo
     ports:
       - 27017:27017
-    networks:
-      - heisln-net
-
-  heisln-carrental-service:
-    image: deitsch/heisln-carrentalservice
-    container_name: heisln-carrentalservice
-    ports:
-      - 9002:80
-    depends_on:
-      - db
-      - rabbitmq
     networks:
       - heisln-net
 
@@ -116,7 +86,42 @@ services:
 networks:
   heisln-net:
     external: true
+""" >> /srv/docker-compose-dependencies.yml
+
+# create docker-compose.yml on instance
+echo """
+version: '3.5'
+
+services:
+  heisln-frontend:
+    container_name: heisln-frontend
+    image: deitsch/heisln-frontend
+    ports:
+      - 8100:80
+    networks:
+      - heisln-net
+  
+  heisln.user.service:
+    image: deitsch/heisln-userservice
+    container_name: heisln-userservice
+    ports:
+      - 9001:80
+    networks:
+      - heisln-net
+
+  heisln-carrental-service:
+    image: deitsch/heisln-carrentalservice
+    container_name: heisln-carrentalservice
+    ports:
+      - 9002:80
+    networks:
+      - heisln-net
+
+networks:
+  heisln-net:
+    external: true
 """ >> /srv/docker-compose.yml
 
 # Run containers
+docker-compose -f /srv/docker-compose-dependencies.yml up -d
 docker-compose -f /srv/docker-compose.yml up -d
