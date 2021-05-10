@@ -35,14 +35,5 @@ terraform destroy
 
 ## Local Deployment
 
-Create docker network:
-
-```bash
-docker network create heisln-net
-```
-
-Start containers:
-
-```bash
-docker-compose up -d
-```
+Use [init-dev.sh](scripts/init-dev.sh) script to pull, update and run all projects needed. 
+Use [teardown-dev.sh](scripts/teardown-dev.sh) to destroy the dev environment.
