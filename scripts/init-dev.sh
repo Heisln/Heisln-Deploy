@@ -3,9 +3,9 @@ TARGET_BASE_DIR="${SCRIPT_DIR}/../../heisln-infrastructure"
 GITHUB_ORG="Heisln"
 
 REPOS=(\
+  Heisln-currency-converter \
   Heisln-Api-CarRentalService \
   Heisln-UserService \
-  Heisln-currency-converter \
 )
 
 echo Create heisln-net network
@@ -19,19 +19,18 @@ for repo in "${REPOS[@]}"; do
     echo [*] Checking presence of $repo
     REPO_DIR=${TARGET_BASE_DIR}/$repo
     if [ ! -d "${REPO_DIR}" ]; then
-        echo Repository missing. Cloning...
-        git clone git@github.com:$GITHUB_ORG/$repo.git "${REPO_DIR}"
-        git checkout develop
+      echo Repository missing. Cloning...
+      git clone -b develop git@github.com:$GITHUB_ORG/$repo.git "${REPO_DIR}"
     else
-        cd "${REPO_DIR}" && git pull
+      cd "${REPO_DIR}" && git pull
     fi
 done
 
 # run compose files
 for repo in "${REPOS[@]}"; do
   REPO_DIR=${TARGET_BASE_DIR}/$repo
-  if [ -f "${REPO_DIR}/docker-compose.yml" ]; then
-     docker-compose up -d
+  if [ -f "${REPO_DIR}/docker-compose.dev.yml" ]; then
+      cd "${REPO_DIR}" && docker-compose -f docker-compose.dev.yml up -d --build
   else
     echo "No docker-compose found ... skipping"
   fi
@@ -40,15 +39,13 @@ done
 echo [*] Done
 
 echo ""
-echo "# Connect to api-gateway service"
-echo "open http://localhost:6001"
+echo "# Currency Converter"
+echo "open http://localhost:9000"
+
 echo ""
-echo "# Connect to stammdaten service"
-echo "open http://localhost:6002"
+echo "# User API"
+echo "open http://localhost:9001"
+
 echo ""
-echo "# Connect to verfahren service"
-echo "open http://localhost:6003"
-echo ""
-echo "# Connect to reporting-engine service"
-echo "open http://localhost:6004"
-echo ""
+echo "# Car API"
+echo "open http://localhost:9002"
