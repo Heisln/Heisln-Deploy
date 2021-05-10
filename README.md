@@ -27,7 +27,7 @@ Deploy frontend, api and currency-converter:
 terraform apply
 ```
 
-Undeploy:
+Destroy:
 
 ```bash
 terraform destroy
