@@ -57,6 +57,7 @@ services:
       - heisln-net
     depends_on:
       - mongo
+      - rabbitmq
 
   mongo:
     image: mongo
@@ -72,7 +73,8 @@ services:
     ports:
       - 9002:80
     depends_on:
-      - heisln-mysql
+      - db
+      - rabbitmq
     networks:
       - heisln-net
 
