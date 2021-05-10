@@ -5,7 +5,7 @@ GITHUB_ORG="Heisln"
 REPOS=(\
   Heisln-rabbitmq \
   Heisln-currency-converter \
-  Heisln-Api-CarRentalService \
+  Heisln-CarRentalService \
   Heisln-UserService \
 )
 
